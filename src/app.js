@@ -1,9 +1,9 @@
 import express from 'express';
 import corsMiddleware from './middlewares/cors.js';
 import setUpMiddlewares from './middlewares/setup.js';
-import objectRouter from './apps/objects/router/object.router.js';
+import { createObjectRouter } from './apps/objects/router/object.routes.js';
 
-export default function createApp() {
+export default function createApp({ objectModel }) {
   const app = express();
 
   corsMiddleware(app);
@@ -13,7 +13,7 @@ export default function createApp() {
     res.json({ message: 'Hello World!' });
   });
 
-  app.use('/objects', objectRouter);
+  app.use('/objects', createObjectRouter({ objectModel }));
 
   app.use((err, req, res, next) => {
     console.error('Global Error Handler:', err);

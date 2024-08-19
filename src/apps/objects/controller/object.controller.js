@@ -1,11 +1,13 @@
-import { ObjectModel } from '../model/object.model.js';
-
 export class ObjectController {
+  constructor({ objectModel }) {
+    this.objectModel = objectModel;
+  }
+
   getAll = async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 20;
-      const objects = await ObjectModel.getAll(page, limit);
+      const objects = await this.objectModel.getAll(page, limit);
       res.json(objects);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -14,7 +16,7 @@ export class ObjectController {
 
   getById = async (req, res) => {
     try {
-      const object = await ObjectModel.getById(req.params.id);
+      const object = await this.objectModel.getById(req.params.id);
       res.json(object);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -28,7 +30,7 @@ export class ObjectController {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 20;
       console.log(page, limit);
-      const objects = await ObjectModel.getByDepartment(id, page, limit);
+      const objects = await this.objectModel.getByDepartment(id, page, limit);
       res.json(objects);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -40,7 +42,11 @@ export class ObjectController {
       const country = req.query.country;
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 20;
-      const objects = await ObjectModel.getByLocation(country, page, limit);
+      const objects = await this.objectModel.getByLocation(
+        country,
+        page,
+        limit,
+      );
       res.json(objects);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -52,7 +58,7 @@ export class ObjectController {
       const key = req.params.key;
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 20;
-      const objects = await ObjectModel.getByKeyword(key, page, limit);
+      const objects = await this.objectModel.getByKeyword(key, page, limit);
       res.json(objects);
     } catch (error) {
       res.status(500).json({ message: error.message });

@@ -1,8 +1,9 @@
 import createApp from '../app.js';
 import normalizePort from '../utils/normalizePort.js';
+import { ObjectModel } from '../apps/objects/model/object.model.js';
 import { createServer } from 'node:http';
 
-const app = createApp();
+const app = createApp({ objectModel: ObjectModel });
 
 const PORT = normalizePort(process.env.PORT ?? 8080);
 
@@ -11,6 +12,6 @@ const server = createServer(app);
 server.listen(PORT, () => {
   console.log(
     `Listening on port ${PORT}\n`,
-    `\nIndex: http://localhost:${PORT}/`
+    `\nIndex: http://localhost:${PORT}/`,
   );
 });
