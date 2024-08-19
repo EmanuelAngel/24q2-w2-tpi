@@ -2,11 +2,11 @@
   "name": "24q2-w2-tpi",
   "version": "0.1.0",
   "description": "Trabajo Práctico Integrador Web 2 - 2024",
-  "main": "./src/bin/www",
+  "main": "./src/.bin/www",
   "type": "module",
   "scripts": {
-    "start": "node ./src/bin/www",
-    "watch": "node ./src/bin/www --watch",
+    "start": "node ./src/.bin/www",
+    "watch": "node ./src/.bin/www --watch",
     "build:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css",
     "watch:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch"
   },
