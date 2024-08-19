@@ -13,6 +13,7 @@ export default function createApp({ objectModel }) {
     res.json({ message: 'Hello World!' });
   });
 
+  // https://collectionapi.metmuseum.org/public/collection/v1/search?q=a&geolocation=france&departmentId=4
   app.use('/objects', createObjectRouter({ objectModel }));
 
   app.use((err, req, res, next) => {
