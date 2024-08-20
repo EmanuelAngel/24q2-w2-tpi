@@ -7,10 +7,7 @@ export const createObjectRouter = ({ objectModel }) => {
   const objectController = new ObjectController({ objectModel });
 
   router.get('/', objectController.get);
-  // router.get('/:id', objectController.getById);
-  // router.get('/department/:id', objectController.getByDepartment);
-  // router.get('/location', objectController.getByLocation);
-  // router.get('/keyword/:key', objectController.getByKeyword);
+  router.get('/:id', objectController.getById);
 
   return router;
 };
