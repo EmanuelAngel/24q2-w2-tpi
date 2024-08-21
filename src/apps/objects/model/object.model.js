@@ -56,21 +56,56 @@ export class ObjectModel {
     }
   }
 
-  static async getByDepartment(departmentId, page = 1, limit = 20) {
+  static async getByDepartment(page = 1, limit = 20, departmentId) {
     try {
-      console.log('Entered getByDepartment');
+      const objects = await axios
+        .get(`${URL}objects?departmentIds=${departmentId}`)
+        .then((response) => response.data.objectIDs);
 
-      return { message: 'getByDepartment not implemented yet' };
+      if (objects && objects.length > 0) {
+        const startIndex = (page - 1) * limit;
+        const endIndex = startIndex + limit;
+        const paginatedObjects = objects.slice(startIndex, endIndex);
+        const promises = paginatedObjects.map((id) =>
+          axios.get(`${URL}objects/${id}`).then((response) => response.data)
+        );
+
+        const objectDetails = await Promise.all(promises);
+        return {
+          total: objects.length,
+          page: page,
+          limit: limit,
+          totalPages: Math.ceil(objects.length / limit),
+          objects: objectDetails,
+        };
+      } else {
+        console.error('No objects found in this department.');
+        return { total: 0, page: 0, limit: 0, totalPages: 0, objects: [] };
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+      throw new Error(error.message);
+    }
+  }
+
+  static async getByLocation(page = 1, limit = 20, geolocation) {
+    try {
+      console.log('Entering getByLocation');
+
+      return { message: 'getByLocation not implemented yet' };
+
       // const objects = await axios
-      //   .get(`${URL}/objects?departmentIds=${departmentId}`)
+      //   .get(`${URL}objects`) // <- Inevitable. API doesn't allow to search by location.
       //   .then((response) => response.data.objectIDs);
+
       // if (objects && objects.length > 0) {
       //   const startIndex = (page - 1) * limit;
       //   const endIndex = startIndex + limit;
       //   const paginatedObjects = objects.slice(startIndex, endIndex);
       //   const promises = paginatedObjects.map((id) =>
-      //     axios.get(`${URL}/objects/${id}`).then((response) => response.data)
+      //     axios.get(`${URL}objects/${id}`).then((response) => response.data)
       //   );
+
       //   const objectDetails = await Promise.all(promises);
       //   return {
       //     total: objects.length,
@@ -81,7 +116,7 @@ export class ObjectModel {
       //   };
       // } else {
       //   console.error('No objects found in this department.');
-      //   return { total: 0, page: 1, limit, totalPages: 0, objects: [] };
+      //   return { total: 0, page: 0, limit: 0, totalPages: 0, objects: [] };
       // }
     } catch (error) {
       console.error('Error:', error.message);

@@ -46,12 +46,10 @@ export class ObjectController {
         );
       } else {
         // Si no se proporcionan parámetros suficientes, no hacer nada y retornar un 400
-        return res
-          .status(400)
-          .json({
-            message:
-              'No se proporcionaron parámetros suficientes para realizar una búsqueda.',
-          });
+        return res.status(400).json({
+          message:
+            'No se proporcionaron parámetros suficientes para realizar una búsqueda.',
+        });
       }
 
       res.json(objects);
@@ -59,13 +57,6 @@ export class ObjectController {
       res.status(500).json({ message: error.message });
     }
   };
-
-  // console.log(
-  //   `Controller: get \n
-  //   Page: ${page}, Limit: ${limit}, Department ID: ${
-  //     departmentId || null
-  //   }, Geolocation: ${geolocation || null}, Query: ${q || null}`
-  // );
 
   getById = async (req, res) => {
     try {
