@@ -9,15 +9,24 @@ export class ObjectModel {
     geolocation = '',
     q = ''
   ) {
-    const department = departmentId ? `&departmentId=${departmentId}` : '';
-    const location = geolocation ? `&geolocation=${geolocation}` : '';
+    //? Refactor assignments
+    //? if dep or geo are provided, add '&' to q, for example
+
+    const department = departmentId ? `departmentId=${departmentId}` : '';
+    const location = geolocation ? `geolocation=${geolocation}` : '';
     const keyword = q ? `q=${q}` : '';
 
     try {
       console.log('URL:', `${URL}search?${department}${location}${keyword}`);
 
       const objects = await axios
-        .get(`${URL}search?${department}${location}${keyword}`)
+        .get(`${URL}search?`, {
+          params: {
+            departmentId: departmentId,
+            geolocation: geolocation,
+            q: q,
+          },
+        })
         .then((response) => response.data.objectIDs);
 
       if (objects && objects.length > 0) {

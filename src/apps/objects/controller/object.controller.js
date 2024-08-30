@@ -13,22 +13,26 @@ export class ObjectController {
     try {
       let objects;
 
+      // If departmentId is provided, but not geolocation or q
       if (departmentId && !geolocation && !q) {
-        // Si solo llega departmentId
         objects = await this.objectModel.getByDepartment(
           page,
           limit,
           departmentId
         );
-      } else if (geolocation && !departmentId && !q) {
-        // Si solo llega geolocation
+      }
+
+      // If geolocation is provided, but not departmentId or q
+      else if (geolocation && !departmentId && !q) {
         objects = await this.objectModel.getByLocation(
           page,
           limit,
           geolocation
         );
-      } else if (q) {
-        // Si llega q, o q y cualquier otro parámetro
+      }
+
+      // If q is provided, or q and any other parameter
+      else if (q) {
         objects = await this.objectModel.get(
           page,
           limit,
@@ -36,16 +40,20 @@ export class ObjectController {
           geolocation,
           q
         );
-      } else if (departmentId && geolocation && !q) {
-        // Si solo llegan departmentId y geolocation, pero NO q
+      }
+
+      // If departmentId and geolocation are provided, but NOT q
+      else if (departmentId && geolocation && !q) {
         objects = await this.objectModel.getByDepartmentLocation(
           page,
           limit,
           departmentId,
           geolocation
         );
-      } else {
-        // Si no se proporcionan parámetros suficientes, no hacer nada y retornar un 400
+      }
+
+      // If no parameters are provided, do nothing and return 400
+      else {
         return res.status(400).json({
           message:
             'No se proporcionaron parámetros suficientes para realizar una búsqueda.',
