@@ -14,4 +14,6 @@ server.listen(PORT, () => {
     `Listening on port ${PORT}\n`,
     `\nIndex: http://localhost:${PORT}/`
   );
+
+  console.log(`Views: ${app.get('views')}`);
 });

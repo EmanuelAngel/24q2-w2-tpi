@@ -1,6 +1,6 @@
-include ../lib/DarkModeToggler/DarkModeToggler.pug
-include ../lib/Search/Search.pug
-include ../lib/Gallery/Gallery.pug
+include ./lib/DarkModeToggler/DarkModeToggler.pug
+include ./lib/Search/Search.pug
+include ./lib/Gallery/Gallery.pug
 
 doctype html
 html(lang="es")
@@ -8,28 +8,18 @@ html(lang="es")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel="icon" href="images/favicon.ico", type="image/x-icon")
-    include ../fonts/googleFonts.pug
-    include ../fonts/montserratFont.pug
-    include ../styles/styles.pug
-    include ../scripts/scripts.pug
+    include ./fonts/googleFonts.pug
+    include ./fonts/montserratFont.pug
+    include ./styles/styles.pug
+    include ./scripts/scripts.pug
     title The Met Museum
   body
-    div(class="dark:text-neutral-100 dark:bg-neutral-900")
+    div(class="bg-primary-100 text-primary-950 dark:bg-primary-950 dark:text-primary-100")
       div(class="p-16 flex flex-col items-start justify-end h-[600px] bg-center bg-cover hero" style="background-image: url('/images/hero-placeholder.jpg')")
         h1(class="text-3xl font-semibold text-white md:text-5xl ") THE
         h1(class="text-3xl font-semibold text-white md:text-5xl ") MET
-      main(class="flex flex-col items-center justify-center max-w-5xl px-4 py-16 mx-auto")
+      main(class="flex flex-col items-center justify-center max-w-5xl gap-16 px-4 py-16 mx-auto")
         +Search()
         +Gallery({ data: objects })
-
-
-    
-
-
-
-
-
-
-
-    
+        
     +DarkModeToggler()

@@ -73,7 +73,8 @@ export class ObjectController {
         objects = await this.objectModel.getByKeyword(page, limit, q);
       }
 
-      res.render('index', { objects });
+      console.log(objects);
+      res.render('index', objects);
       // res.json(objects);
     } catch (error) {
       res.status(500).json({ message: error.message });

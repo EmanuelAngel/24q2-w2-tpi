@@ -1,0 +1,16 @@
+mixin Pagination({ total, page, limit, totalPages })
+  div(class="flex flex-col gap-4 md:flex-row md:gap-8")
+    div(class="flex flex-col gap-2 md:flex-row md:gap-2")
+      span(class="text-sm font-medium text-primary-700 dark:text-primary-300") Página
+      span(class="text-sm font-medium text-primary-700 dark:text-primary-300") #{page}
+      span(class="text-sm font-medium text-primary-700 dark:text-primary-300") de
+      span(class="text-sm font-medium text-primary-700 dark:text-primary-300") #{totalPages}
+    div(class="flex flex-col gap-2 md:flex-row md:gap-2")
+      if page > 1
+        a(href="#" class="text-sm font-medium text-primary-700 dark:text-primary-300") Anterior
+      else
+        span(class="text-sm font-medium text-primary-700 dark:text-primary-300") Anterior
+      if page < totalPages
+        a(href="#" class="text-sm font-medium text-primary-700 dark:text-primary-300") Siguiente
+      else
+        span(class="text-sm font-medium text-primary-700 dark:text-primary-300") Siguiente

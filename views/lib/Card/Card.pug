@@ -1,0 +1,20 @@
+include ../Button/Button.pug
+
+mixin Card({ title, culture, dynasty, image, additionalImages })
+  div(class=`card flex gap-8 flex-col justify-center w-full h-full bg-primary-200/40 dark:bg-primary-900/20 rounded-md p-4`)
+    div(class="flex flex-col items-center justify-center w-full")
+      img(src=`${image || '/images/placeholder.png'}` class="object-cover w-full h-full rounded-md card-image")
+
+    h1(class="text-xl font-semibold card-title text-primary-900 dark:text-primary-100")
+      | #{title && title.trim() !== '' ? title : 'Título no especificado.'}
+
+    div(class="flex flex-col gap-2")
+      h2(class="text-sm font-medium text-left card-property text-primary-700 dark:text-primary-300")
+        | Cultura: #{culture && culture.trim() !== '' ? culture : 'No especificada.'}
+
+      h2(class="text-sm font-medium text-left card-property text-primary-700 dark:text-primary-300")
+        | Dinastía: #{dynasty && dynasty.trim() !== '' ? dynasty : 'No especificada.'}
+        
+    if additionalImages.length > 0
+      div(class="flex justify-end")
+        +Button({ text: "Ver más", color: "ghost", className: "mt-4 w-fit", icon: 'ArrowUpRight' })

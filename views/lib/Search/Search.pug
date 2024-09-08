@@ -1,0 +1,11 @@
+include ../Button/Button.pug
+
+mixin Search()
+  form(class="flex flex-col w-full gap-8")
+    header(class="text-3xl font-semibold text-left text-primary-900 dark:text-primary-100") Filtros
+    div(class="flex flex-col gap-6 md:flex-row md:gap-8")
+      select#filter(class="w-full p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent")
+        option(selected value="all") Todos
+      input(type="text" class="p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent" placeholder="France")
+      input(type="text" class="p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent" placeholder="Sunflower")
+    +Button({ text: "Filtrar", color: "primary", className: "w-32 text-center" })
