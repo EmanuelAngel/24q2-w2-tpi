@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node ./src/.bin/www",
     "watch": "node ./src/.bin/www --watch",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
     "build:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css",
     "watch:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch"
   },
@@ -19,7 +20,8 @@
     "Node",
     "Express",
     "PUG",
-    "mySQL"
+    "mySQL",
+    "Jest"
   ],
   "author": "Angel Emanuel",
   "license": "ISC",
@@ -33,7 +35,9 @@
     "pug": "3.0.3"
   },
   "devDependencies": {
+    "jest": "29.7.0",
     "semistandard": "17.0.0",
+    "supertest": "7.0.0",
     "tailwindcss": "3.4.10"
   }
 }

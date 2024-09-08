@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#colorModeBtn {
+  @apply fixed p-2 transition-colors duration-300 border rounded-full top-4 right-4 border-neutral-300 bg-neutral-200 text-neutral-800 dark:bg-neutral-950 dark:text-neutral-400 dark:border-neutral-900 hover:bg-neutral-300 hover:text-black dark:hover:bg-neutral-800 dark:hover:text-neutral-200 dark:focus:text-white dark:focus:bg-neutral-700;
+}

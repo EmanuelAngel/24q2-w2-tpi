@@ -1,5 +1,5 @@
 import cors from 'cors';
 
-export default function corsMiddleware() {
+export const corsMiddleware = (app) => {
   return cors('*');
-}
+};

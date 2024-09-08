@@ -1,0 +1,7 @@
+include SunIcon.pug
+include MoonIcon.pug
+
+mixin DarkModeToggler()
+  button(id="colorModeBtn")
+    +SunIcon({ width: 24, height: 24, classNames: "stroke-[1.5px]" })
+    +MoonIcon({ width: 24, height: 24, classNames: "stroke-[1.5px] hidden" })

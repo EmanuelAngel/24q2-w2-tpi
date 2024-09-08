@@ -19,6 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
   colorModeBtn.addEventListener('click', () => {
     const currentMode = html.classList.contains('dark') ? 'dark' : 'light';
     const newMode = currentMode === 'dark' ? 'light' : 'dark';
+    const sunIcon = document.getElementById('sun');
+    const moonIcon = document.getElementById('moon');
+    newMode === 'dark'
+      ? sunIcon.classList.add('hidden')
+      : sunIcon.classList.remove('hidden');
+    newMode === 'dark'
+      ? moonIcon.classList.remove('hidden')
+      : moonIcon.classList.add('hidden');
     localStorage.setItem('color-mode', newMode);
     setColorMode(newMode);
   });
