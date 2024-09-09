@@ -1,43 +1,62 @@
 include ChevronLeftIcon.pug
 include ChevronRightIcon.pug
 
-mixin Pagination({ total, page, limit, totalPages })
+- const aClassNames = 'block leading-8 text-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8'
+- const aActiveClassNames = 'block leading-8 text-center text-white rounded bg-primary-600 border-primary-600 size-8'
+- const prevPage = page - 1
+- const nextPage = page + 1
+
+- function buildURL(newPage, queryParams) {
+-   const params = new URLSearchParams()
+-   for (const [key, value] of Object.entries(queryParams)) {
+-     if (value !== null && value !== undefined && value !== '') {
+-       params.set(key, value)
+-     }
+-   }
+-   params.set('page', newPage)
+-   const queryString = params.toString()
+-   return queryString ? `?${queryString}` : ''
+- }
+
+mixin Pagination({ total, page, limit, totalPages, queryParams })
   ol(class="flex justify-start gap-1 text-xs font-medium")
     li
-      a(href="#" alt="Anterior" class="inline-flex items-center justify-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8")
+      a(href=buildURL(prevPage, queryParams) alt="Anterior" class=`inline-flex items-center justify-center ${aClassNames}` disabled=page === 1)
         span(class="sr-only") Anterior
         +ChevronLeftIcon({ width: 16, height: 16 })
+
+    if totalPages > 5
+      if page > 3
+        li
+          a(href=buildURL(1, queryParams) class=`${aClassNames}`)
+            | 1
+        if page > 4
+          li
+            span(class=`${aClassNames}`) ...
+
+      - for (let i = Math.max(1, page - 1); i <= Math.min(totalPages, page + 1); i++)
+        li
+          if i === page
+            span(class=`${aActiveClassNames}`)= i
+          else
+            a(href=buildURL(i, queryParams) class=`${aClassNames}`)= i
+
+      if page < totalPages - 2
+        if page < totalPages - 3
+          li
+            span(class=`${aClassNames}`) ...
+        li
+          a(href=buildURL(totalPages, queryParams) class=`${aClassNames}`)= totalPages
+    else
+      - for (let i = 1; i <= totalPages; i++)
+        li
+          if i === page
+            span(class=`${aActiveClassNames}`)= i
+          else
+            a(href=buildURL(i, queryParams) class=`${aClassNames}`)= i
+
     li
-      a(href="#" class="block leading-8 text-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8")
-        | 1
-    li
-      a(href="#" class="block leading-8 text-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8")
-        | 9
-    li(class="block leading-8 text-center text-white rounded bg-primary-600 border-primary-600 size-8")
-      | 10
-    li
-      a(href="#" class="block leading-8 text-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8")
-        | 11
-    li
-      a(href="#" class="block leading-8 text-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8")
-        | 225
-    li
-      a(href="#" alt="Siguiente" class="inline-flex items-center justify-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8")
+      a(href=buildURL(nextPage, queryParams) alt="Siguiente" class=`inline-flex items-center justify-center ${aClassNames}` disabled=page === totalPages)
         span(class="sr-only") Siguiente
         +ChevronRightIcon({ width: 16, height: 16 })
-
-  //- div(class="flex flex-col gap-4 md:flex-row md:gap-8")
-  //-   div(class="flex flex-col gap-2 md:flex-row md:gap-2")
-  //-     span(class="text-sm font-medium text-primary-700 dark:text-primary-300") Página
-  //-     span(class="text-sm font-medium text-primary-700 dark:text-primary-300") #{page}
-  //-     span(class="text-sm font-medium text-primary-700 dark:text-primary-300") de
-  //-     span(class="text-sm font-medium text-primary-700 dark:text-primary-300") #{totalPages}
-  //-   div(class="flex flex-col gap-2 md:flex-row md:gap-2")
-  //-     if page > 1
-  //-       a(href=`#` class="text-sm font-medium text-primary-700 dark:text-primary-300") Anterior
-  //-     else
-  //-       span(class="text-sm font-medium text-primary-700 dark:text-primary-300") Anterior
-  //-     if page < totalPages
-  //-       a(href="#" class="text-sm font-medium text-primary-700 dark:text-primary-300") Siguiente
-  //-     else
-  //-       span(class="text-sm font-medium text-primary-700 dark:text-primary-300") Siguiente
+        

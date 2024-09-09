@@ -1,6 +1,6 @@
 include ../Button/Button.pug
 
-mixin Card({ title, culture, dynasty, image, additionalImages, date })
+mixin Card({ title, culture, dynasty, image, additionalImages, date, id })
   div(class=`card flex gap-8 flex-col justify-center w-full h-full bg-primary-200/40 dark:bg-primary-900/20 rounded-md p-4 hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out`)
     div(class="relative flex flex-col items-center justify-center w-full group")
       img(src=`${image || '/images/placeholder.png'}` class="object-cover w-full h-full rounded-md card-image cursor-help" alt="Imagen de un objeto de arte")
@@ -18,4 +18,4 @@ mixin Card({ title, culture, dynasty, image, additionalImages, date })
         
     if additionalImages.length > 0
       div(class="flex justify-end")
-        +Button({ text: "Ver más", color: "ghost", className: "mt-4 w-fit", icon: 'ArrowUpRight' })
+        +Button({ text: "Ver más", color: "ghost", className: "mt-4 w-fit", icon: 'ArrowUpRight', href: `/${id}` })

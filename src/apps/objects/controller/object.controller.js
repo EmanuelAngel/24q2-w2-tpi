@@ -73,6 +73,13 @@ export class ObjectController {
         objects = await this.objectModel.getByKeyword(page, limit, q);
       }
 
+      objects.queryParams = {
+        departmentId,
+        geolocation,
+        q,
+      };
+
+      console.clear();
       console.log(objects);
       res.render('index', objects);
       // res.json(objects);
