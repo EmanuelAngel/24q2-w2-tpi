@@ -2,8 +2,9 @@ include ../Card/Card.pug
 include ../Pagination/Pagination.pug
 
 mixin Gallery({ data })
-  +Pagination({ total, page, limit, totalPages })
-  div(class="grid grid-flow-row-dense gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4")
-    each item in data
-      +Card({ title: item.title, culture: item.culture, dynasty: item.dynasty, additionalImages: item.additionalImages, image: item.primaryImageSmall })
-  +Pagination({ total, page, limit, totalPages })
+  div(class="flex flex-col items-start gap-8")
+    +Pagination({ total, page, limit, totalPages })
+    div(class="grid grid-flow-row-dense gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4")
+      each item in data
+        +Card({ title: item.title, culture: item.culture, dynasty: item.dynasty, additionalImages: item.additionalImages, image: item.primaryImageSmall, date: item.objectDate })
+    +Pagination({ total, page, limit, totalPages })

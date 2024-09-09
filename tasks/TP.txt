@@ -9,7 +9,7 @@ La página debe permitir recuperar imágenes de objetos de arte basándose en un
 - Palabra clave (objetos de arte que contienen la palabra a buscar en los datos del objeto.)
 - Localización (objetos que coinciden con una localización. Ej. Europe, China, Paris)
 
-El filtrado puede ser individual (ej. sólo buscar por departamento) o acumulativo (Ej. buscar por objetos por un departamento, que contengan una palabra clave y sean de una localización)
+El filtrado puede ser individual (ej. sólo buscar por departamento) o acumulativo (Ej. buscar objetos por un departamento, que contengan una palabra clave y sean de una localización)
 
 Las imágenes de los objetos de arte deben mostrarse en una grilla de 4 columnas. Cada imagen debe mostrarse como una tarjeta con su respectiva imagen, título, cultura y dinastía.
 Si el objeto tiene imágenes adicionales debe mostrarse un botón que permita al usuario verlas en una página diferente.

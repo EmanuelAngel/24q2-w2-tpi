@@ -1,18 +1,19 @@
 include ../Button/Button.pug
 
-mixin Card({ title, culture, dynasty, image, additionalImages })
-  div(class=`card flex gap-8 flex-col justify-center w-full h-full bg-primary-200/40 dark:bg-primary-900/20 rounded-md p-4`)
-    div(class="flex flex-col items-center justify-center w-full")
-      img(src=`${image || '/images/placeholder.png'}` class="object-cover w-full h-full rounded-md card-image")
+mixin Card({ title, culture, dynasty, image, additionalImages, date })
+  div(class=`card flex gap-8 flex-col justify-center w-full h-full bg-primary-200/40 dark:bg-primary-900/20 rounded-md p-4 hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out`)
+    div(class="relative flex flex-col items-center justify-center w-full group")
+      img(src=`${image || '/images/placeholder.png'}` class="object-cover w-full h-full rounded-md card-image cursor-help" alt="Imagen de un objeto de arte")
+      span(class="absolute p-1 text-sm font-semibold transition-opacity duration-300 ease-in-out bg-black bg-opacity-50 rounded-md opacity-0 pointer-events-none bottom-2 left-2 group-hover:opacity-100 group-hover:pointer-events-auto text-primary-100") #{(date && date.trim() !== '' && date.trim() !== '<>') ? date : 'Fecha no especificada.'}
 
-    h1(class="text-xl font-semibold card-title text-primary-900 dark:text-primary-100")
+    h3(class="text-xl font-semibold card-title text-primary-900 dark:text-primary-100")
       | #{title && title.trim() !== '' ? title : 'Título no especificado.'}
 
     div(class="flex flex-col gap-2")
-      h2(class="text-sm font-medium text-left card-property text-primary-700 dark:text-primary-300")
+      p(class="text-sm font-medium text-left card-property text-primary-700 dark:text-primary-300")
         | Cultura: #{culture && culture.trim() !== '' ? culture : 'No especificada.'}
 
-      h2(class="text-sm font-medium text-left card-property text-primary-700 dark:text-primary-300")
+      p(class="text-sm font-medium text-left card-property text-primary-700 dark:text-primary-300")
         | Dinastía: #{dynasty && dynasty.trim() !== '' ? dynasty : 'No especificada.'}
         
     if additionalImages.length > 0

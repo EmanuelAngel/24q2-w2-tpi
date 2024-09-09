@@ -1,23 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    './src/views/*.pug',
-    './src/views/**/*.pug',
-    './src/views/**/**/*.pug',
-    './src/views/**/**/**/*.pug',
-    './src/views/**/**/**/**/*.pug',
-    './src/views/**/**/**/**/**/*.pug',
-    './src/views/lib/button/button.pug',
-    './views/*.pug',
-    './views/**/*.pug',
-    './views/**/**/*.pug',
-    './views/**/**/**/*.pug',
-    './views/**/**/**/**/*.pug',
-    './views/**/**/**/**/**/*.pug',
-    './views/lib/button/button.pug',
-  ],
+  content: ['./views/*.pug', './views/**/*.pug', './views/**/**/*.pug'],
   theme: {
     extend: {
+      brightness: {
+        75: '.75',
+      },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],
       },
