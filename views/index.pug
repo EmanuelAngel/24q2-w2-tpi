@@ -4,7 +4,7 @@ include ./lib/DarkModeToggler/DarkModeToggler.pug
 include ./lib/Footer/Footer.pug
 
 doctype html
-html(lang="es")
+html(lang="es" class="no-transition")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -13,6 +13,7 @@ html(lang="es")
     include ./fonts/montserratFont.pug
     include ./styles/styles.pug
     include ./scripts/scripts.pug
+      
     title The Met Museum
   body
     div(class="transition-colors duration-300 ease-out dark:ease-in scroll-smooth bg-primary-100 text-primary-950 dark:bg-primary-950 dark:text-primary-100")

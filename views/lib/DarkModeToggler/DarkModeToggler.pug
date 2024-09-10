@@ -1,7 +1,40 @@
-include SunIcon.pug
-include MoonIcon.pug
-
 mixin DarkModeToggler()
-  button(id="colorModeBtn")
-    +SunIcon({ width: 24, height: 24, classNames: "stroke-[1.5px]" })
-    +MoonIcon({ width: 24, height: 24, classNames: "stroke-[1.5px] hidden" })
+  button#colorModeBtn(
+    class="relative p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-800 focus:ring-primary-500"
+    aria-label="Alternar modo de color"
+    title="Alternar entre modo oscuro y claro"
+  )
+    span.sr-only Modo actual:
+    span#currentMode.sr-only Claro
+    svg.sun-icon(xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700 transition-all duration-300 ease-in-out rotate-0 dark:text-gray-200 dark:opacity-0 dark:scale-0 dark:-rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor")
+      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
+    svg.moon-icon(xmlns="http://www.w3.org/2000/svg" class="absolute w-6 h-6 text-gray-700 transition-all duration-300 ease-in-out scale-0 rotate-90 opacity-0 top-2 left-2 dark:text-gray-200 dark:opacity-100 dark:scale-100 dark:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor")
+      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
+
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      const colorModeBtn = document.getElementById('colorModeBtn');
+      const currentModeText = document.getElementById('currentMode');
+
+      function setColorMode(mode) {
+        const root = document.documentElement;
+        root.classList.remove('light', 'dark');
+        root.classList.add(mode);
+        root.style.colorScheme = mode;
+        localStorage.setItem('color-mode', mode);
+        currentModeText.textContent = mode === 'dark' ? 'Oscuro' : 'Claro';
+      }
+
+      currentModeText.textContent = document.documentElement.classList.contains('dark') ? 'Oscuro' : 'Claro';
+
+      colorModeBtn.addEventListener('click', () => {
+        const newMode = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        setColorMode(newMode);
+      });
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('color-mode')) {
+          setColorMode(e.matches ? 'dark' : 'light');
+        }
+      });
+    });
