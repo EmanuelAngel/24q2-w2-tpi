@@ -1,0 +1,24 @@
+include ./lib/Carousel/Carousel.pug
+include ./lib/DarkModeToggler/DarkModeToggler.pug
+include ./lib/Footer/Footer.pug
+
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="icon" href="images/favicon.ico", type="image/x-icon")
+    include ./fonts/googleFonts.pug
+    include ./fonts/montserratFont.pug
+    include ./styles/styles.pug
+    include ./scripts/scripts.pug
+    link(rel="stylesheet", href="/css/carousel.css")
+    title The Met Museum
+  body
+    div(class="transition-colors duration-300 ease-out dark:ease-in scroll-smooth bg-primary-100 text-primary-950 dark:bg-primary-950 dark:text-primary-100")
+      main(class="flex flex-col items-center justify-center max-w-5xl min-h-screen gap-16 px-4 py-16 mx-auto")
+        +Carousel({ images: object.additionalImages })
+
+      +Footer()
+      
+    +DarkModeToggler()

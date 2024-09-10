@@ -6,7 +6,9 @@ export class ObjectController {
   getById = async (req, res) => {
     try {
       const object = await this.objectModel.getById(req.params.id);
-      res.json(object);
+
+      console.log(object);
+      res.render('details', { object });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

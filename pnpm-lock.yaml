@@ -28,13 +28,13 @@ importers:
         version: 3.0.3
     devDependencies:
       jest:
-        specifier: ^29.7.0
+        specifier: 29.7.0
         version: 29.7.0(@types/node@22.5.3)
       semistandard:
         specifier: 17.0.0
         version: 17.0.0
       supertest:
-        specifier: ^7.0.0
+        specifier: 7.0.0
         version: 7.0.0
       tailwindcss:
         specifier: 3.4.10
