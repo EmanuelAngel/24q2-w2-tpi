@@ -1,7 +1,7 @@
 include ./ArrowUpRight.pug
 include ./ImageIcon.pug
 
-mixin Button({ text = "Button", color = "neutral", className = "", type = "button", disabled = false, icon = null,  href = "#" })
+mixin Button({ text = "Button", color = "neutral", id = null, className = "", type = "button", disabled = false, icon = null,  href = null })
   - const btnClasses = `${icon ? 'flex items-center gap-2' : ''} px-4 py-2 rounded-md font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`
   - const variants = {}
   - variants.neutral = "bg-neutral-700 text-white hover:bg-neutral-800 dark:bg-neutral-300 dark:text-black dark:hover:bg-neutral-200"
@@ -9,12 +9,12 @@ mixin Button({ text = "Button", color = "neutral", className = "", type = "butto
   - variants.ghost = "bg-transparent text-primary-700 hover:bg-primary-200 hover:text-primary-800 hover:underline dark:text-primary-300 dark:hover:bg-primary-900"
 
   if href
-    a(href=href class=`${btnClasses} ${variants[color]} ${className}`)
+    a(href=href class=`${btnClasses} ${variants[color]} ${className}` id=id)
       span #{text}
       if icon
         +ImageIcon({ width: 16, height: 16 })
   else
-    button(class=`${btnClasses} ${variants[color]} ${className}` type=type disabled=disabled) 
+    button(class=`${btnClasses} ${variants[color]} ${className}` type=type disabled=disabled id=id)
       span #{text}
       if icon
         +ImageIcon({ width: 16, height: 16 })

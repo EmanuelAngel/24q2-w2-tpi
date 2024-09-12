@@ -5,9 +5,7 @@
   "main": "./src/.bin/www",
   "type": "module",
   "scripts": {
-    "start": "node ./src/.bin/www",
-    "watch": "node ./src/.bin/www --watch",
-    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest",
+    "start": "nodemon ./src/.bin/www",
     "build:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css",
     "watch:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch"
   },
@@ -30,14 +28,12 @@
     "axios": "1.7.4",
     "cors": "2.8.5",
     "express": "4.19.2",
-    "mysql2": "3.11.0",
     "node-google-translate-skidz": "1.1.2",
     "pug": "3.0.3"
   },
   "devDependencies": {
-    "jest": "29.7.0",
+    "nodemon": "^3.1.4",
     "semistandard": "17.0.0",
-    "supertest": "7.0.0",
     "tailwindcss": "3.4.10"
   }
 }

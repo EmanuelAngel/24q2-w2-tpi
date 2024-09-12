@@ -16,6 +16,7 @@ html(lang="es" class="no-transition")
       
     title The Met Museum
   body
+    +DarkModeToggler()
     div(class="transition-colors duration-300 ease-out dark:ease-in scroll-smooth bg-primary-100 text-primary-950 dark:bg-primary-950 dark:text-primary-100")
       div(class="p-16 flex flex-col items-start justify-end h-[600px] bg-center bg-cover hero bg-[url('/images/hero-placeholder.jpg')] dark:brightness-75")
         h1(class="text-3xl font-semibold text-white md:text-5xl") THE
@@ -26,4 +27,3 @@ html(lang="es" class="no-transition")
         
       +Footer()
         
-    +DarkModeToggler()

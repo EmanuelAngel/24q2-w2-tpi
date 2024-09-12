@@ -1,11 +1,116 @@
 include ../Button/Button.pug
+include ../Select/Select.pug
 
 mixin Search()
-  form(class="flex flex-col w-full gap-8")
-    header(class="text-3xl font-semibold text-left text-primary-900 dark:text-primary-100") Filtros
+  form(class="flex flex-col w-full gap-8" aria-label="Búsqueda de obras de arte" role="search")
+    header(class="text-3xl font-semibold text-left text-primary-900 dark:text-primary-100")
+      h2(id="search-form-title") Filtros de búsqueda
+
     div(class="flex flex-col gap-6 md:flex-row md:gap-8")
-      select#filter(class="w-full p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent")
-        option(selected value="all") Todos
-      input(type="text" class="p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent" placeholder="France")
-      input(type="text" class="p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent" placeholder="Sunflower")
-    +Button({ text: "Filtrar", color: "primary", className: "w-32 text-center" })
+      div(class="w-full")
+        +Select()
+
+      div(class="w-full")
+        label(
+          for="location"
+          class="block mb-2 text-sm font-medium text-primary-900 dark:text-primary-100"
+          ) Ubicación
+        input(
+          id="location"
+          name="location"
+          type="text"
+          class="w-full p-2 border border-transparent rounded-md form-input bg-primary-200/60 focus:ring-0 active:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-transparent placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800"
+          placeholder="Ej: France"
+          aria-describedby="location-description"
+          )
+        p(id="location-description" class="sr-only") Ingrese la ubicación de la obra de arte
+
+      div(class="relative w-full")
+        label(
+          for="keyword"
+          class="block mb-2 text-sm font-medium text-primary-900 dark:text-primary-100") Palabra clave
+        input(
+          id="keyword"
+          name="keyword"
+          type="text"
+          class="w-full p-2 border border-transparent rounded-md form-input bg-primary-200/60 focus:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-transparent placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800"
+          placeholder="Ej: Sunflower"
+          aria-describedby="keyword-description"
+          )
+        p(
+          id="keyword-description"
+          class="sr-only"
+          ) Ingrese una palabra clave para buscar en el título o descripción de la obra
+        p(
+          id="keyword-error"
+          class="invisible mt-1 text-sm text-red-500"
+          ) La palabra clave debe ser una sola palabra
+
+    +Button({
+      text: "Filtrar",
+      id: "search-button",
+      color: "primary",
+      className: "w-32 text-center",
+      type: "button"
+    })
+
+  script.
+    const departmentsElement = document.getElementById('departments');
+    const locationElement = document.getElementById('location');
+    const keywordElement = document.getElementById('keyword');
+    const keywordErrorElement = document.getElementById('keyword-error');
+    const searchButtonElement = document.getElementById('search-button');
+
+    keywordElement.addEventListener('input', handleInput);
+    searchButtonElement.addEventListener('click', handleSubmit);
+
+    function handleInput(event) {
+      const input = event.target;
+      const value = input.value.trim();
+      const hasMultipleWords = /\s/.test(value);
+
+      if (hasMultipleWords) {
+        input.classList.add('border-red-500');
+        input.classList.remove('border-transparent');
+        input.setCustomValidity('La palabra clave debe ser una sola palabra');
+        keywordErrorElement.classList.remove('invisible');
+      } else {
+        input.classList.remove('border-red-500');
+        input.classList.add('border-transparent');
+        input.setCustomValidity('');
+        keywordErrorElement.classList.add('invisible');
+      }
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      const departmentId = departmentsElement.value;
+      const geolocation = locationElement.value.trim();
+      const keyword = keywordElement.value.trim();
+
+      const params = new URLSearchParams();
+      if (departmentId) params.append('departmentId', departmentId);
+      if (geolocation) params.append('geolocation', geolocation);
+      if (keyword) params.append('q', keyword);
+
+      if (params.toString()) {
+        const devUrl = 'https://91hfv49p-8080.brs.devtunnels.ms/' 
+        const url = `${devUrl}?${params.toString()}`;
+        console.log('URL de búsqueda:', url);
+        
+        searchButtonElement.textContent = 'Buscando...';
+        document.body.style.cursor = 'wait';
+
+        // Case where user clicks any other link before the search is complete
+        // AND comes back to the search pageinvisible
+        setTimeout(() => {
+          searchButtonElement.textContent = 'Filtrar';
+          document.body.style.cursor = 'default';
+        }, 10000);
+        
+        window.location.href = url;
+      } else {
+        console.log('Se necesita al menos un filtro para realizar la búsqueda');
+      }
+    }

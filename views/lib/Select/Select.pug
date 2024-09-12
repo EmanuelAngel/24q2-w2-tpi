@@ -1,0 +1,78 @@
+mixin Select()
+  label(
+    for="departments"
+    class="block mb-2 text-sm font-medium text-primary-900 dark:text-primary-100"
+    ) Departamento
+  select(
+    id="departments"
+    name="departments"
+    class="w-full p-2 border-2 rounded-md border-primary-400 bg-inherit dark:bg-transparent"
+    aria-describedby="departments-description"
+    )
+    option(value="") Selecciona un departamento
+  p(
+    id="departments-description"
+    class="sr-only"
+    ) Lista de departamentos del Museo Metropolitano de Arte
+
+script.
+  document.addEventListener('DOMContentLoaded', () => {
+    const departmentsSelect = document.getElementById('departments');
+
+    const DEPARTMENTS_URL = 'https://collectionapi.metmuseum.org/public/collection/v1/departments';
+
+    async function fetchDepartments() {
+      try {
+        const response = await fetch(DEPARTMENTS_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+      } catch (error) {
+        console.error('Error al obtener los departamentos:', error);
+        return { departments: [] };
+      }
+    }
+
+    function populateDepartments(departments) {
+      departments.sort((a, b) => a.displayName.localeCompare(b.displayName));
+
+      const fragment = document.createDocumentFragment();
+      departments.forEach(dept => {
+        const option = document.createElement('option');
+        option.value = dept.departmentId;
+        option.textContent = dept.displayName;
+        fragment.appendChild(option);
+      });
+
+      departmentsSelect.appendChild(fragment);
+    }
+
+    async function initSearch() {
+      const { departments } = await fetchDepartments();
+      if (departments.length > 0) {
+        populateDepartments(departments);
+      } else {
+        departmentsSelect.innerHTML = '<option value="">No se pudieron cargar los departamentos</option>';
+      }
+
+      departmentsSelect.addEventListener('change', () => {
+        const selectedDept = departmentsSelect.options[departmentsSelect.selectedIndex].text;
+        announceToScreenReader(`Departamento seleccionado: ${selectedDept}`);
+      });
+    }
+
+    function announceToScreenReader(message) {
+      const announcement = document.createElement('div');
+      announcement.setAttribute('aria-live', 'polite');
+      announcement.classList.add('sr-only');
+      announcement.textContent = message;
+      document.body.appendChild(announcement);
+
+      setTimeout(() => {
+        document.body.removeChild(announcement);
+      }, 1000);
+    }
+
+    initSearch();
+  });
