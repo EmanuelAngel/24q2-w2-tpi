@@ -9,22 +9,14 @@ export default function createApp({ objectModel }) {
   corsMiddleware(app);
   setUpMiddlewares(app);
 
-  app.use('/', createObjectRouter({ objectModel }));
-
-  app.use((req, _, next) => {
-    const err = new Error(`Not Found - ${req.originalUrl}`);
-    err.status = 404;
-    next(err);
+  app.get('/', (req, res) => {
+    res.render('index');
   });
 
-  app.use((err, req, res, _) => {
-    console.error('Global Error Handler:', err);
+  app.use('/art', createObjectRouter({ objectModel }));
 
-    if (err.status === 404) {
-      return res.status(404).render('404', { url: req.originalUrl });
-    }
-
-    res.status(err.status || 500).json({ message: err.message });
+  app.use((req, res) => {
+    res.status(404).render('404', { message: 'Not found' });
   });
 
   return app;

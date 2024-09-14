@@ -18,4 +18,4 @@ mixin Card({ title, culture, dynasty, image, additionalImages, date, id })
         
     if additionalImages.length > 0
       div(class="flex justify-end")
-        +Button({ text: "Ver más", color: "ghost", className: "w-fit", icon: 'ArrowUpRight', href: `/${id}` })
+        +Button({ text: "Ver más", color: "ghost", className: "w-fit", icon: 'ArrowUpRight', href: `/art/${id}` })

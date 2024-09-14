@@ -46,7 +46,7 @@ export class ObjectController {
 
       const objects = await this.objectModel.get(page, limit, url);
 
-      res.render('index', {
+      res.render('art', {
         ...objects,
         queryParams: { departmentId, geolocation, q },
       });

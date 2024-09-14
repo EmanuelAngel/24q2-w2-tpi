@@ -9,7 +9,7 @@ export const setUpMiddlewares = (app) => {
   app.set('view engine', 'pug');
 
   // Asegúrate de que la ruta apunte a 'views/pages'
-  const viewsPath = path.join(__dirname, '../views/pages');
+  const viewsPath = path.join(__dirname, '../../views/pages');
   console.log('Ruta de vistas:', viewsPath); // Depuración
 
   app.set('views', viewsPath); // Ruta a las vistas

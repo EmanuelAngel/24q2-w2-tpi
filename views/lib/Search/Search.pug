@@ -96,8 +96,9 @@ mixin Search()
       if (keyword) params.append('q', keyword);
 
       if (params.toString()) {
-        const localUrl = 'http://localhost:8080/'
-        const url = `${localUrl}?${params.toString()}`;
+        const localUrl = 'http://localhost:8080/art'
+        const devUrl = 'https://91hfv49p-8080.brs.devtunnels.ms/art'
+        const url = `${devUrl}?${params.toString()}`;
         console.log('URL de búsqueda:', url);
         
         searchButtonElement.textContent = 'Buscando...';
