@@ -4,9 +4,12 @@ include ./ImageIcon.pug
 mixin Button({ text = "Button", color = "neutral", id = null, className = "", type = "button", disabled = false, icon = null,  href = null })
   - const btnClasses = `${icon ? 'flex items-center gap-2' : ''} px-4 py-2 rounded-md font-semibold transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`
   - const variants = {}
+
   - variants.neutral = "bg-neutral-700 text-white hover:bg-neutral-800 dark:bg-neutral-300 dark:text-black dark:hover:bg-neutral-200"
+
   - variants.primary = "bg-primary-700 text-white hover:bg-primary-800 dark:bg-primary-300 dark:text-black dark:hover:bg-primary-200"
-  - variants.ghost = "bg-transparent text-primary-700 hover:bg-primary-200 hover:text-primary-800 hover:underline dark:text-primary-300 dark:hover:bg-primary-900"
+  
+  - variants.ghost = "bg-transparent text-primary-700 hover:bg-primary-200 hover:text-primary-800 hover:underline dark:text-primary-300 dark:hover:text-primary-400 dark:hover:bg-primary-900/60"
 
   if href
     a(href=href class=`${btnClasses} ${variants[color]} ${className}` id=id)
@@ -14,7 +17,7 @@ mixin Button({ text = "Button", color = "neutral", id = null, className = "", ty
       if icon
         +ImageIcon({ width: 16, height: 16 })
   else
-    button(class=`${btnClasses} ${variants[color]} ${className}` type=type disabled=disabled id=id)
+    button(class=`${btnClasses} ${variants[color]} ${className}` type=type id=id)
       span #{text}
       if icon
         +ImageIcon({ width: 16, height: 16 })

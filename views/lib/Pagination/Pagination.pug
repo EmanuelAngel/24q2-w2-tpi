@@ -1,8 +1,8 @@
 include ChevronLeftIcon.pug
 include ChevronRightIcon.pug
 
-- const aClassNames = 'block leading-8 text-center border rounded bg-primary-200 text-primary-900 border-primary-100 size-8'
-- const aActiveClassNames = 'block leading-8 text-center text-white rounded bg-primary-600 border-primary-600 size-8'
+- const aClassNames = 'block leading-8 text-center rounded bg-primary-200 text-primary-900 size-8 dark:text-primary-200 dark:bg-primary-900/60'
+- const aActiveClassNames = 'block leading-8 text-center text-primary-200 rounded bg-primary-600 size-8 dark:bg-primary-200 dark:text-primary-900'
 - const prevPage = page - 1
 - const nextPage = page + 1
 
@@ -19,44 +19,88 @@ include ChevronRightIcon.pug
 - }
 
 mixin Pagination({ total, page, limit, totalPages, queryParams })
-  ol(class="flex justify-start gap-1 text-xs font-medium")
-    li
-      a(href=buildURL(prevPage, queryParams) alt="Anterior" class=`inline-flex items-center justify-center ${aClassNames}` disabled=page === 1)
-        span(class="sr-only") Anterior
-        +ChevronLeftIcon({ width: 16, height: 16 })
+  div(class="text-primary-600/80 dark:text-primary-400/80")
+    p
+      strong(class="font-semibold") #{total} 
+      | resultados encontrados
+    if totalPages > 1
+      p 
+        | Viendo 
+        strong(class="font-semibold") #{limit} 
+        | resultados por página
+      p
+        | Página 
+        strong(class="font-semibold") #{page }
+        |  de 
+        strong(class="font-semibold") #{totalPages}
 
-    if totalPages > 5
-      if page > 3
-        li
-          a(href=buildURL(1, queryParams) class=`${aClassNames}`)
-            | 1
-        if page > 4
+  if total === 0
+    p(class="text-primary-600/80 dark:text-primary-400/80") No hay resultados para esta búsqueda
+  else if totalPages > 1
+    ol(class="flex justify-start gap-1 text-xs font-medium")
+      li
+        a(href=buildURL(prevPage, queryParams) alt="Anterior" class=`pagination-link inline-flex items-center justify-center ${aClassNames}` disabled=page === 1)
+          span(class="sr-only") Anterior
+          +ChevronLeftIcon({ width: 16, height: 16 })
+
+      if totalPages > 5
+        if page > 3
           li
-            span(class=`${aClassNames}`) ...
+            a(href=buildURL(1, queryParams) class=`pagination-link ${aClassNames}`)
+              | 1
+          if page > 4
+            li
+              span(class=`${aClassNames}`) ...
 
-      - for (let i = Math.max(1, page - 1); i <= Math.min(totalPages, page + 1); i++)
-        li
-          if i === page
-            span(class=`${aActiveClassNames}`)= i
-          else
-            a(href=buildURL(i, queryParams) class=`${aClassNames}`)= i
-
-      if page < totalPages - 2
-        if page < totalPages - 3
+        - for (let i = Math.max(1, page - 1); i <= Math.min(totalPages, page + 1); i++)
           li
-            span(class=`${aClassNames}`) ...
-        li
-          a(href=buildURL(totalPages, queryParams) class=`${aClassNames}`)= totalPages
-    else
-      - for (let i = 1; i <= totalPages; i++)
-        li
-          if i === page
-            span(class=`${aActiveClassNames}`)= i
-          else
-            a(href=buildURL(i, queryParams) class=`${aClassNames}`)= i
+            if i === page
+              span(class=`${aActiveClassNames}`)= i
+            else
+              a(href=buildURL(i, queryParams) class=`pagination-link ${aClassNames}`)= i
 
-    li
-      a(href=buildURL(nextPage, queryParams) alt="Siguiente" class=`inline-flex items-center justify-center ${aClassNames}` disabled=page === totalPages)
-        span(class="sr-only") Siguiente
-        +ChevronRightIcon({ width: 16, height: 16 })
-        
+        if page < totalPages - 2
+          if page < totalPages - 3
+            li
+              span(class=`${aClassNames}`) ...
+          li
+            a(href=buildURL(totalPages, queryParams) class=`pagination-link ${aClassNames}`)= totalPages
+      else
+        - for (let i = 1; i <= totalPages; i++)
+          li
+            if i === page
+              span(class=`${aActiveClassNames}`)= i
+            else
+              a(href=buildURL(i, queryParams) class=`pagination-link ${aClassNames}`)= i
+
+      li
+        a(href=buildURL(nextPage, queryParams) alt="Siguiente" class=`pagination-link inline-flex items-center justify-center ${aClassNames}` disabled=page === totalPages)
+          span(class="sr-only") Siguiente
+          +ChevronRightIcon({ width: 16, height: 16 })
+
+  script.
+    document.addEventListener('DOMContentLoaded', function() {
+      const paginationLinks = document.querySelectorAll('.pagination-link');
+      paginationLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const spinner = document.createElement('div');
+          spinner.className = 'spinner';
+          spinner.innerHTML = '&#8987;';
+          this.textContent = '';
+          this.appendChild(spinner);
+          setTimeout(() => {
+            window.location.href = this.href;
+          }, 500);
+        });
+      });
+    });
+
+  style.
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }

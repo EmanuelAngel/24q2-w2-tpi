@@ -19,7 +19,7 @@ mixin Search()
           id="location"
           name="location"
           type="text"
-          class="w-full p-2 border border-transparent rounded-md form-input bg-primary-200/60 focus:ring-0 active:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-transparent placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800"
+          class="w-full p-2 border border-transparent rounded-md form-input bg-primary-200/60 focus:ring-0 active:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-primary-900/60 placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800"
           placeholder="Ej: France"
           aria-describedby="location-description"
           )
@@ -33,7 +33,7 @@ mixin Search()
           id="keyword"
           name="keyword"
           type="text"
-          class="w-full p-2 border border-transparent rounded-md form-input bg-primary-200/60 focus:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-transparent placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800"
+          class="w-full p-2 border border-transparent rounded-md form-input bg-primary-200/60 focus:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-primary-900/60 placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800"
           placeholder="Ej: Sunflower"
           aria-describedby="keyword-description"
           )
@@ -51,7 +51,8 @@ mixin Search()
       id: "search-button",
       color: "primary",
       className: "w-32 text-center",
-      type: "button"
+      type: "button",
+      disabled: true
     })
 
   script.
@@ -95,11 +96,12 @@ mixin Search()
       if (keyword) params.append('q', keyword);
 
       if (params.toString()) {
-        const devUrl = 'https://91hfv49p-8080.brs.devtunnels.ms/' 
-        const url = `${devUrl}?${params.toString()}`;
+        const localUrl = 'http://localhost:8080/'
+        const url = `${localUrl}?${params.toString()}`;
         console.log('URL de búsqueda:', url);
         
         searchButtonElement.textContent = 'Buscando...';
+        searchButtonElement.style.cursor = 'not-allowed';
         document.body.style.cursor = 'wait';
 
         // Case where user clicks any other link before the search is complete
@@ -107,6 +109,7 @@ mixin Search()
         setTimeout(() => {
           searchButtonElement.textContent = 'Filtrar';
           document.body.style.cursor = 'default';
+          searchButtonElement.style.cursor = 'pointer';
         }, 10000);
         
         window.location.href = url;

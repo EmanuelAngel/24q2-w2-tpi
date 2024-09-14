@@ -1,3 +1,5 @@
+import { buildUrl } from '../../../utils/buildUrl.js';
+
 export class ObjectController {
   constructor({ objectModel }) {
     this.objectModel = objectModel;
@@ -6,6 +8,10 @@ export class ObjectController {
   getById = async (req, res) => {
     try {
       const object = await this.objectModel.getById(req.params.id);
+
+      if (!object) {
+        return res.status(404).render('404', { message: 'Object not found' });
+      }
 
       console.log(object);
       res.render('details', { object });
@@ -19,7 +25,12 @@ export class ObjectController {
     const limit = parseInt(req.query.limit) || 20;
     const { departmentId = '', geolocation = '', q = '' } = req.query;
 
-    // For testing
+    if (page < 1 || limit < 1) {
+      return res.status(400).json({
+        message: 'Page and limit must be positive integers.',
+      });
+    }
+
     if (!departmentId && !geolocation && !q) {
       return res.status(400).json({
         message: 'Not enough parameters provided for search.',
@@ -27,66 +38,20 @@ export class ObjectController {
     }
 
     try {
-      let objects;
+      const baseUrl =
+        'https://collectionapi.metmuseum.org/public/collection/v1/search';
+      const url = buildUrl(baseUrl, { departmentId, geolocation, q });
 
-      // Definir las funciones de búsqueda según las combinaciones de parámetros
-      if (departmentId && geolocation && q) {
-        objects = await this.objectModel.getByAll(
-          page,
-          limit,
-          departmentId,
-          geolocation,
-          q
-        );
-      } else if (departmentId && geolocation) {
-        objects = await this.objectModel.getByDepartmentAndLocation(
-          page,
-          limit,
-          departmentId,
-          geolocation
-        );
-      } else if (departmentId && q) {
-        objects = await this.objectModel.getByDepartmentAndKeyword(
-          page,
-          limit,
-          departmentId,
-          q
-        );
-      } else if (geolocation && q) {
-        objects = await this.objectModel.getByLocationAndKeyword(
-          page,
-          limit,
-          geolocation,
-          q
-        );
-      } else if (departmentId) {
-        objects = await this.objectModel.getByDepartment(
-          page,
-          limit,
-          departmentId
-        );
-      } else if (geolocation) {
-        objects = await this.objectModel.getByLocation(
-          page,
-          limit,
-          geolocation
-        );
-      } else if (q) {
-        objects = await this.objectModel.getByKeyword(page, limit, q);
-      }
+      console.log('From controller, URL:', url);
 
-      objects.queryParams = {
-        departmentId,
-        geolocation,
-        q,
-      };
+      const objects = await this.objectModel.get(page, limit, url);
 
-      console.clear();
-      console.log(objects);
-      res.render('index', objects);
-      // res.json(objects);
+      res.render('index', {
+        ...objects,
+        queryParams: { departmentId, geolocation, q },
+      });
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(error.status || 500).json({ message: error.message });
     }
   };
 }

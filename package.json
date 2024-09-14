@@ -1,6 +1,6 @@
 {
   "name": "24q2-w2-tpi",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Trabajo Práctico Integrador Web 2 - 2024",
   "main": "./src/.bin/www",
   "type": "module",
@@ -32,7 +32,7 @@
     "pug": "3.0.3"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4",
+    "nodemon": "3.1.4",
     "semistandard": "17.0.0",
     "tailwindcss": "3.4.10"
   }
