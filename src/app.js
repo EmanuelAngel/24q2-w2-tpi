@@ -9,13 +9,13 @@ export default function createApp({ objectModel }) {
   corsMiddleware(app);
   setUpMiddlewares(app);
 
-  app.get('/', (req, res) => {
+  app.get('/', (_, res) => {
     res.render('index');
   });
 
   app.use('/art', createObjectRouter({ objectModel }));
 
-  app.use((req, res) => {
+  app.use((_, res) => {
     res.status(404).render('404', { message: 'Not found' });
   });
 

@@ -1,4 +1,5 @@
 import { buildUrl } from '../../../utils/buildUrl.js';
+import { translateObjects as translate } from '../../../utils/translate.js';
 
 export class ObjectController {
   constructor({ objectModel }) {
@@ -44,7 +45,14 @@ export class ObjectController {
 
       console.log('From controller, URL:', url);
 
-      const objects = await this.objectModel.get(page, limit, url);
+      let objects = await this.objectModel.get(page, limit, url);
+
+      const translatedObjects = await translate(objects.objects);
+
+      objects = {
+        ...objects,
+        objects: translatedObjects,
+      };
 
       res.render('art', {
         ...objects,
