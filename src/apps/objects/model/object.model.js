@@ -13,30 +13,30 @@ export class ObjectModel {
 
   static async get(page, limit, url) {
     try {
-      console.log('Entering get');
-
-      console.log('From model:', url);
-
       const objects = await axios
         .get(url)
         .then((response) => response.data.objectIDs);
-
-      console.log('Finished getting objects');
 
       if (objects && objects.length > 0) {
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
         const paginatedObjects = objects.slice(startIndex, endIndex);
 
-        // An idea: if a request fails, return a mock?
-        // ...or something like that.
         const promises = paginatedObjects.map((id) =>
-          axios.get(`${URL}objects/${id}`).then((response) => response.data)
+          axios
+            .get(`${URL}objects/${id}`)
+            .then((response) => response.data)
+            .catch(() => ({
+              title: 'Could not found object',
+              culture: '',
+              dynasty: '',
+              objectDate: '',
+              additionalImages: [],
+              error: true,
+            }))
         );
 
         const objectDetails = await Promise.all(promises);
-
-        console.log('Object details:', objects.length);
 
         return {
           total: objects.length,

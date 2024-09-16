@@ -6,6 +6,6 @@ mixin Gallery({ data })
     +Pagination({ total, page, limit, totalPages, queryParams })
     div(class="grid grid-flow-row-dense gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4")
       each item in data
-        +Card({ title: item.title, culture: item.culture, dynasty: item.dynasty, additionalImages: item.additionalImages, image: item.primaryImageSmall, date: item.objectDate, id: item.objectID })
+        +Card({ title: item.title, culture: item.culture, dynasty: item.dynasty, additionalImages: item.additionalImages, image: item.primaryImageSmall, date: item.objectDate, id: item.objectID, error: item.error })
     if total > 0
       +Pagination({ total, page, limit, totalPages, queryParams })

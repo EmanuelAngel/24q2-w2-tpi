@@ -1,6 +1,10 @@
 import translate from 'node-google-translate-skidz';
 
 async function translateText({ text, source = 'en', target = 'es' }) {
+  if (text === '') {
+    return text;
+  }
+
   try {
     const result = await new Promise((resolve, reject) => {
       translate({ text, source, target }, (result) => {
@@ -15,6 +19,7 @@ async function translateText({ text, source = 'en', target = 'es' }) {
     return result;
   } catch (error) {
     console.error('Error al traducir:', error);
+    return text;
   }
 }
 
