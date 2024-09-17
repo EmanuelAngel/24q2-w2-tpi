@@ -5,7 +5,8 @@
   "main": "./src/.bin/www",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./src/.bin/www",
+    "start": "node ./src/.bin/www",
+    "dev": "nodemon ./src/.bin/www",
     "build:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css",
     "watch:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch"
   },
@@ -17,9 +18,7 @@
     "ES6",
     "Node",
     "Express",
-    "PUG",
-    "mySQL",
-    "Jest"
+    "PUG"
   ],
   "author": "Angel Emanuel",
   "license": "ISC",
