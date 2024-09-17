@@ -1,5 +1,6 @@
 include ChevronLeftIcon.pug
 include ChevronRightIcon.pug
+include ArrowRightIcon.pug
 
 - const aClassNames = 'block leading-8 text-center rounded bg-primary-200 text-primary-900 size-8 dark:text-primary-200 dark:bg-primary-900/60'
 - const aActiveClassNames = 'block leading-8 text-center text-primary-200 rounded bg-primary-600 size-8 dark:bg-primary-200 dark:text-primary-900'
@@ -81,7 +82,50 @@ mixin Pagination({ total, page, limit, totalPages, queryParams })
               span(class="sr-only") Siguiente
               +ChevronRightIcon({ width: 16, height: 16 })
 
+      div(class="inline-flex items-center justify-center gap-2")
+        label(for="goToPage" class="text-primary-600/80 dark:text-primary-400/80") Ir a la página
+        div(id="goToPageDiv" class="inline-flex h-8")
+          input(type="number", id="goToPageInput" name="goToPage" min="1" max=`${totalPages}` value=`${page}` class="h-full text-center border border-transparent rounded-l-md w-fit form-input bg-primary-200/60 focus:ring-0 active:ring-0 focus:border focus:border-primary-500 focus:bg-transparent dark:bg-primary-900/60 placeholder:italic placeholder:text-primary-400 dark:placeholder:text-primary-800")
+          
+          button(id="searchPage" type="button" class="grid h-full px-2 font-semibold text-white transition-colors duration-300 w-content rounded-r-md place-content-center bg-primary-700 hover:bg-primary-800 dark:bg-primary-300 dark:text-black dark:hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500")
+            span(class="sr-only") Ir a la página
+            +ArrowRightIcon({ width: 16, height: 16 })
+          
+          span(id="goToPageError" class="invisible m-2 text-sm text-red-700")
+            | Por favor, ingrese un número de página válido entre 1 y #{totalPages}.
+
   script.
+    const goToPageInput = document.getElementById('goToPageInput');
+    const goToPageBtn = document.getElementById('searchPage');
+    const goToPageError = document.getElementById('goToPageError');
+
+    const url = new URL(window.location.href);
+    const page = url.searchParams.get('page') || 1;
+
+    goToPageInput.value = page;
+
+    goToPageBtn.addEventListener('click', function() {
+      const pageNumber = parseInt(goToPageInput.value);
+      if (pageNumber >= 1 && pageNumber <= #{totalPages}) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('page', pageNumber);
+
+        const spinner = document.createElement('div');
+        spinner.className = 'spinner';
+        spinner.innerHTML = '&#8987;';
+        this.textContent = '';
+        this.appendChild(spinner);
+
+        window.location.href = url;
+      } else {
+        goToPageError.classList.remove('invisible');
+        
+        setTimeout(() => {
+          goToPageError.classList.add('invisible');
+        }, 5000);
+      }
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
       const paginationLinks = document.querySelectorAll('.pagination-link');
       paginationLinks.forEach(link => {
@@ -92,9 +136,7 @@ mixin Pagination({ total, page, limit, totalPages, queryParams })
           spinner.innerHTML = '&#8987;';
           this.textContent = '';
           this.appendChild(spinner);
-          setTimeout(() => {
-            window.location.href = this.href;
-          }, 500);
+          window.location.href = this.href;
         });
       });
     });

@@ -1,6 +1,7 @@
+include ./lib/DarkModeToggler/DarkModeToggler.pug
+include ./lib/StartEndBtn/StartEndBtn.pug
 include ./lib/Search/Search.pug
 include ./lib/Gallery/Gallery.pug
-include ./lib/DarkModeToggler/DarkModeToggler.pug
 include ./lib/Footer/Footer.pug
 
 doctype html
@@ -17,10 +18,12 @@ html(lang="es" class="no-transition")
     title The Met Museum
   body
     +DarkModeToggler()
-    div(class="transition-colors duration-300 ease-out dark:ease-in scroll-smooth bg-primary-100 text-primary-950 dark:bg-primary-950 dark:text-primary-100")
+    +StartEndBtn()
+    div(id="top-page" class="transition-colors duration-300 ease-out dark:ease-in scroll-smooth bg-primary-100 text-primary-950 dark:bg-primary-950 dark:text-primary-100")
       main(class="flex flex-col items-center justify-center max-w-5xl gap-16 px-4 py-16 mx-auto")
         +Search()
         +Gallery({ data: objects })
-        
+
+      span(id="bottom-page")
       +Footer()
         
