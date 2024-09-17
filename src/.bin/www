@@ -4,7 +4,6 @@ import { ObjectModel } from '../apps/objects/model/object.model.js';
 import { createServer } from 'node:http';
 
 const app = createApp({ objectModel: ObjectModel });
-
 const PORT = normalizePort(process.env.PORT ?? 8080);
 
 if (PORT === false) {
@@ -17,3 +16,5 @@ const server = createServer(app);
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}\n`);
 });
+
+export default server;
