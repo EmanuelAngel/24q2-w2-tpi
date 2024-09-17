@@ -19,5 +19,10 @@ export default function createApp({ objectModel }) {
     res.status(404).render('404', { message: 'Not found' });
   });
 
+  app.use((err, _, res, __) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Internal Server Error' });
+  });
+
   return app;
 }

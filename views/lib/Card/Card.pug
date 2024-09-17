@@ -6,12 +6,13 @@ mixin Card({ title, culture, dynasty, image, additionalImages, date, id, error }
       if error 
         img(src="/images/objectNotFound.jpg" class="object-cover w-full h-full rounded-md" alt="No se pudo encontrar el objeto")
       else
-        img(src=`${image || '/images/placeholder.jpg'}` class="object-cover w-full h-full rounded-md card-image cursor-help" alt="Imagen de un objeto de arte")
-        span(class="absolute p-1 text-sm font-semibold transition-opacity duration-300 ease-in-out bg-black bg-opacity-50 rounded-md opacity-0 pointer-events-none bottom-2 left-2 group-hover:opacity-100 group-hover:pointer-events-auto text-primary-100") #{(date && date.trim() !== '' && date.trim() !== '<>' && date.trim() !== 'n.d.') ? date : 'Fecha no especificada.'}
+        a(href="#" tabindex="0" class="rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500")
+          img(src=`${image || '/images/placeholder.jpg'}` class="object-cover w-full h-full rounded-md card-image cursor-help" alt="Imagen de un objeto de arte")
+          span(class="absolute p-1 text-sm font-semibold transition-opacity duration-300 ease-in-out bg-black bg-opacity-50 rounded-md opacity-0 pointer-events-none bottom-2 left-2 group-hover:opacity-100 group-focus-within:opacity-100 text-primary-100") #{(date && date.trim() !== '' && date.trim() !== '<>' && date.trim() !== 'n.d.') ? date : 'Fecha no especificada.'}
 
     h3(class="text-xl font-semibold text-primary-900 dark:text-primary-100")
       | #{title && title.trim() !== '' ? title : 'Título no especificado.'}
-
+      
     if !error
       div(class="flex flex-col gap-2")
         p(class="text-sm font-medium text-left text-primary-700 dark:text-primary-300")
