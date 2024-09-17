@@ -11,10 +11,12 @@ if (PORT === false) {
   process.exit(1);
 }
 
-const server = createServer(app);
+export const server = createServer(app);
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}\n`);
 });
 
-export default server;
+export default function handler(req, res) {
+  server(req, res);
+}
