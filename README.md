@@ -11,10 +11,10 @@ Requerimientos en /tasks/TP.pdf
 - CSS3
 - [TailwindCSS](https://tailwindcss.com/) - Framework CSS
 - JavaScript (ES6+)
-- [NodeJS](https://nodejs.org/en/) - Servidor
+- [Node v20.7.0](https://nodejs.org/en/) - Servidor
 - [Skidz's Google Translate NodeJS Package](https://github.com/statickidz/node-google-translate-skidz) - Traducción de textos
-- [Pug](https://pugjs.org/) - Server Side Rendering
-- [Vercel](https://vercel.com/) - Hosting
+- [Pug](https://pugjs.org/) (Anteriormente Jade) - Server Side Rendering
+- [Render](https://render.com/) - Hosting
 - [Leonardo](https://leonardo.ai/) - Imagenes de error personalizadas
 - [NY Met Museum API](https://metmuseum.github.io/) - API de datos de imágenes de arte
 
