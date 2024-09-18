@@ -98,7 +98,8 @@ mixin Search()
       if (params.toString()) {
         const localUrl = 'http://localhost:8080/art'
         const devUrl = 'https://91hfv49p-8080.brs.devtunnels.ms/art'
-        const url = `${localUrl}?${params.toString()}`;
+        const deployedUrl = 'https://two4q2-w2-tpi.onrender.com/'
+        const url = `${deployedUrl}?${params.toString()}`;
         console.log('URL de búsqueda:', url);
         
         searchButtonElement.textContent = 'Buscando...';
