@@ -8,7 +8,8 @@
     "start": "node src/.bin/www",
     "dev": "nodemon ./src/.bin/www",
     "build:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css",
-    "watch:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch"
+    "watch:css": "tailwindcss -i ./public/css/tailwind/input.css -o ./public/css/tailwind/output.css --watch",
+    "minify:css": "tailwindcss -o ./public/css/tailwind/output.css --minify"
   },
   "keywords": [
     "HTML",

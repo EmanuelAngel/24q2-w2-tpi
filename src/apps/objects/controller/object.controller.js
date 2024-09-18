@@ -14,7 +14,6 @@ export class ObjectController {
         return res.status(404).render('404', { message: 'Object not found' });
       }
 
-      console.log(object);
       res.render('details', { object });
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -42,8 +41,6 @@ export class ObjectController {
       const baseUrl =
         'https://collectionapi.metmuseum.org/public/collection/v1/search';
       const url = buildUrl(baseUrl, { departmentId, geolocation, q });
-
-      console.log('From controller, URL:', url);
 
       let objects = await this.objectModel.get(page, limit, url);
 

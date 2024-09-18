@@ -96,18 +96,13 @@ mixin Search()
       if (keyword) params.append('q', keyword);
 
       if (params.toString()) {
-        const localUrl = 'http://localhost:8080/art'
-        const devUrl = 'https://91hfv49p-8080.brs.devtunnels.ms/art'
-        const deployedUrl = 'https://two4q2-w2-tpi.onrender.com/'
-        const url = `${deployedUrl}?${params.toString()}`;
-        console.log('URL de búsqueda:', url);
+        const baseUrl = `${window.location.origin}/art`;
+        const url = `${baseUrl}?${params.toString()}`;
         
         searchButtonElement.textContent = 'Buscando...';
         searchButtonElement.style.cursor = 'not-allowed';
         document.body.style.cursor = 'wait';
 
-        // Case where user clicks any other link before the search is complete
-        // AND comes back to the search pageinvisible
         setTimeout(() => {
           searchButtonElement.textContent = 'Filtrar';
           document.body.style.cursor = 'default';
@@ -115,7 +110,5 @@ mixin Search()
         }, 10000);
         
         window.location.href = url;
-      } else {
-        console.log('Se necesita al menos un filtro para realizar la búsqueda');
       }
     }
